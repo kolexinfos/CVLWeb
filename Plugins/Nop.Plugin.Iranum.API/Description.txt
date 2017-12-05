@@ -1,0 +1,9 @@
+﻿Group: Misc Plugins
+FriendlyName: NopCommerce API
+SystemName: Plugin.API
+Version: 1.0
+SupportedVersions: 3.90
+Author: Ants Team, Kehinde Kolade
+DisplayOrder: 1
+FileName: Nop.Plugin.Iranum.API.dll
+Description: This exposes the NopCommerce Core functionalities to other client platforms using RESTFul Endpoints  

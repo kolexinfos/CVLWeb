@@ -1,0 +1,9 @@
+﻿Group: Payment methods
+FriendlyName: Paystack Payment
+SystemName: Payment.Paystack
+Version: 1.0
+SupportedVersions: 3.90
+Author: Ants Team, Kehinde Kolade
+DisplayOrder: 1
+FileName: Nop.Plugin.Iranum.Shop.PaystackPayment.dll
+Description: This plugin enables integration with PAystack API for card payments

@@ -1,0 +1,9 @@
+﻿Group: Payment methods
+FriendlyName: PayOnDelivery
+SystemName: Payment.PayOnDelivery
+Version: 1.0
+SupportedVersions: 3.90
+Author: Ants Team, Kehinde Kolade
+DisplayOrder: 1
+FileName: Nop.Plugin.Iranum.Shop.PayOnDelivery.dll
+Description: This integrates a payment on delivery feature  

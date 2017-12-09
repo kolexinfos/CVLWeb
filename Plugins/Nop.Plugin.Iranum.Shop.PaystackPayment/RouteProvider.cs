@@ -14,6 +14,12 @@ namespace Nop.Plugin.Iranum.Shop.PaystackPayment
                  new { controller = "PaystackPayment", action = "Return" },
                  new[] { "Nop.Plugin.Iranum.Shop.PaystackPayment.Controllers" }
             );
+
+            routes.MapRoute("Plugin.Iranum.Shop.PaystackPayment.Test",
+                "Plugins/PaystackPayment/Test",
+                new { controller = "PaystackPayment", action = "Test" },
+                new[] { "Nop.Plugin.Iranum.Shop.PaystackPayment.Controllers" }
+           );
         }
         public int Priority
         {

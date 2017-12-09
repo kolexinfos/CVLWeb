@@ -58,7 +58,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CvlapiController.cs" />
+    <Compile Include="CvlapiPlugin.cs" />
+    <Compile Include="CvlapiSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RouteProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Description.txt">

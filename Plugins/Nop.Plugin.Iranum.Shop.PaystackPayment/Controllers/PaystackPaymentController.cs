@@ -98,6 +98,10 @@ namespace Nop.Plugin.Iranum.Shop.PaystackPayment.Controllers
             return paymentInfo;
         }
 
+        public ActionResult Test()
+        {
+            return new JsonResult();
+        }
         [ValidateInput(false)]
         public ActionResult Return(FormCollection form)
         {

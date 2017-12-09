@@ -1,2 +1,2 @@
 DataProvider: sqlserver
-DataConnectionString: Data Source=.\SHAREPOINT;Initial Catalog=NopCommerce;Integrated Security=True;Persist Security Info=False
+DataConnectionString: Data Source=computervillageliveng.database.windows.net;Initial Catalog=cvlapidb;Integrated Security=False;Persist Security Info=False;User ID=AntDevelopers;Password=AntHill@2017

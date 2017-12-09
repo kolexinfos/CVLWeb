@@ -20,6 +20,31 @@
             <response code="200">OK</response>
             <response code="401">Unauthorized</response>
         </member>
+        <member name="M:Nop.Plugin.Api.Controllers.ProductAttributesController.GetProductAttributes(Nop.Plugin.Api.Models.ProductAttributes.ProductAttributesParametersModel)">
+            <summary>
+            Receive a list of all product attributes
+            </summary>
+            <response code="200">OK</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:Nop.Plugin.Api.Controllers.ProductAttributesController.GetProductAttributesCount">
+            <summary>
+            Receive a count of all product attributes
+            </summary>
+            <response code="200">OK</response>
+            <response code="401">Unauthorized</response>
+        </member>
+        <member name="M:Nop.Plugin.Api.Controllers.ProductAttributesController.GetProductAttributeById(System.Int32,System.String)">
+            <summary>
+            Retrieve product attribute by spcified id
+            </summary>
+            <param name="id">Id of the product attribute</param>
+            <param name="fields">Fields from the product attribute you want your json to contain</param>
+            <response code="200">OK</response>
+            <response code="404">Not Found</response>
+            <response code="401">Unauthorized</response>
+        </member>
         <member name="M:Nop.Plugin.Api.Controllers.StoreController.GetCurrentStore(System.String)">
             <summary>
             Retrieve category by spcified id
@@ -359,6 +384,11 @@
             Gets or sets the display order
             </summary>
         </member>
+        <member name="P:Nop.Plugin.Api.DTOs.Languages.LanguageDto.StoreIds">
+            <summary>
+            Gets or sets the store ids in which the language is enabled
+            </summary>
+        </member>
         <member name="P:Nop.Plugin.Api.DTOs.Languages.LocalizedNameDto.LanguageId">
             <summary>
             Gets or sets the language identifier
@@ -448,6 +478,21 @@
         <member name="P:Nop.Plugin.Api.DTOs.OrderItems.OrderItemDto.Product">
             <summary>
             Gets the product
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.ProductAttributes.ProductAttributeDto.Id">
+            <summary>
+            Gets or sets the product attribute id
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.ProductAttributes.ProductAttributeDto.Name">
+            <summary>
+            Gets or sets the name
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.DTOs.ProductAttributes.ProductAttributeDto.Description">
+            <summary>
+            Gets or sets the description
             </summary>
         </member>
         <member name="P:Nop.Plugin.Api.DTOs.Products.ProductAttributeValueDto.Id">
@@ -1638,6 +1683,31 @@
         <member name="P:Nop.Plugin.Api.DTOs.ShoppingCarts.ShoppingCartItemDto.CustomerDto">
             <summary>
             Gets or sets the customer
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.Models.ProductAttributes.ProductAttributesParametersModel.Ids">
+            <summary>
+            A comma-separated list of category ids
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.Models.ProductAttributes.ProductAttributesParametersModel.Limit">
+            <summary>
+            Amount of results (default: 50) (maximum: 250)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.Models.ProductAttributes.ProductAttributesParametersModel.Page">
+            <summary>
+            Page to show (default: 1)
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.Models.ProductAttributes.ProductAttributesParametersModel.SinceId">
+            <summary>
+            Restrict results to after the specified ID
+            </summary>
+        </member>
+        <member name="P:Nop.Plugin.Api.Models.ProductAttributes.ProductAttributesParametersModel.Fields">
+            <summary>
+            comma-separated list of fields to include in the response
             </summary>
         </member>
         <member name="P:Nop.Plugin.Api.Models.CategoriesParameters.BaseCategoriesParametersModel.CreatedAtMin">

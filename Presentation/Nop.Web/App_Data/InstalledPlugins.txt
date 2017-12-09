@@ -21,3 +21,4 @@ Widgets.NivoSlider
 Payment.PayOnDelivery
 Payment.Paystack
 Plugin.API
+Nop.Plugin.Api

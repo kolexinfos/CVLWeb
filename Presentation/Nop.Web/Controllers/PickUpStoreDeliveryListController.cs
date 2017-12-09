@@ -19,7 +19,7 @@ namespace Nop.Web.Controllers
 
         public virtual ActionResult OrderList(int? page)
         {
-            return View();
+            return Json(JsonRequestBehavior.AllowGet) ;
         }
     }
 }

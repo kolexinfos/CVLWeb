@@ -13,18 +13,18 @@ namespace Nop.Plugin.Iranum.API
     {
         public void RegisterRoutes(RouteCollection routes)
         {
-            //Return
-            //routes.MapRoute("Plugin.Iranum.API.Return",
+           // Return
+            routes.MapRoute("Plugin.Iranum.API.Return",
+                 "Plugins/Cvlapi/Return",
+                 new { controller = "Cvlapi", action = "Return" },
+                 new[] { "Nop.Plugin.Iranum.API.Controllers" }
+            );
+
+            //RouteCollectionExtensions.MapRoute(routes, "Plugin.Iranum.API.Return",
             //     "Plugins/Cvlapi/Return",
             //     new { controller = "Cvlapi", action = "Return" },
-            //     new[] { "Nop.Plugin.Iranum.API.Controllers" }
+            //     new string[1]{ "Nop.Plugin.Iranum.API.Controllers" }
             //);
-
-            RouteCollectionExtensions.MapRoute(routes, "Plugin.Iranum.API.Return",
-                 "Plugins/API/Return",
-                 new { controller = "Cvlapi", action = "Return" },
-                 new string[1]{ "Nop.Plugin.Iranum.API.Controllers" }
-            );
         }
         public int Priority
         {

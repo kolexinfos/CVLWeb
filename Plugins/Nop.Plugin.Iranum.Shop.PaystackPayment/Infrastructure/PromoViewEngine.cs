@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Nop.Plugin.Widgets.PromoSlider.Infrastructure
+namespace Nop.Plugin.Iranum.Shop.PaystackPayment.Infrastructure
 {
     public class PaystackViewEngine : ThemeableRazorViewEngine
     {

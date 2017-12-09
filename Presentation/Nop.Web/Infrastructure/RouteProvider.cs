@@ -25,6 +25,11 @@ namespace Nop.Web.Infrastructure
                             new { controller = "Widget", action = "WidgetsByZone" },
                             new[] { "Nop.Web.Controllers" });
 
+            routes.MapLocalizedRoute("CustomerPickUpStoreDeliveryList",
+                            "pickupstoredeliverylist/list",
+                            new { controller = "PickUpStoreDeliveryList", action = "OrderList" },
+                            new[] { "Nop.Web.Controllers" });
+
             //login
             routes.MapLocalizedRoute("Login",
                             "login/",

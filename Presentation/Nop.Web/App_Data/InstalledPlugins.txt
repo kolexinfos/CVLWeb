@@ -20,3 +20,4 @@ Widgets.GoogleAnalytics
 Widgets.NivoSlider
 Payment.PayOnDelivery
 Payment.Paystack
+Plugin.API

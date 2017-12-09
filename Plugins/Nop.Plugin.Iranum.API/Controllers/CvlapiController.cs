@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Nop.Services.Payments;
+using Nop.Web.Controllers;
 
 namespace Nop.Plugin.Iranum.API.Controllers
 {
-    class CvlapiController : BaseController
+    class CvlapiController : BasePublicController
     {
         private readonly ISettingService _settingService;
         
@@ -29,11 +31,14 @@ namespace Nop.Plugin.Iranum.API.Controllers
             
         }
 
+       
+
         [ValidateInput(false)]
         public ActionResult Return(FormCollection form)
         {
             return new JsonResult();
         }
 
+        
     }
 }

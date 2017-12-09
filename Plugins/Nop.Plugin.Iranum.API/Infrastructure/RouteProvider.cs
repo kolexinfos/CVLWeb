@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Nop.Plugin.Iranum.Shop.PaystackPayment.Infrastructure
+namespace Nop.Plugin.Iranum.API.Infrastructure
 {
     public class RouteProvider : IRouteProvider
     {
@@ -16,7 +16,7 @@ namespace Nop.Plugin.Iranum.Shop.PaystackPayment.Infrastructure
 
         public void RegisterRoutes(System.Web.Routing.RouteCollection routes)
         {
-            ViewEngines.Engines.Insert(0, new PaystackViewEngine());
+            ViewEngines.Engines.Insert(0, new APIViewEngine());
         }
     }
 }

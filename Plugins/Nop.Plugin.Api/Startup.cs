@@ -19,6 +19,7 @@ using Owin;
 using Swashbuckle.Application;
 using System.Net;
 using Nop.Plugin.Api.Helpers;
+using Nop.Plugin.Api.Providers;
 
 namespace Nop.Plugin.Api
 {
@@ -27,42 +28,58 @@ namespace Nop.Plugin.Api
         public void Configuration(IAppBuilder app)
         {
             // uncomment only if the client is an angular application that directly calls the oauth endpoint
-            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
             ConfigureOAuth(app);
 
-            app.UseStageMarker(PipelineStage.PostAuthenticate);
+            //app.UseStageMarker(PipelineStage.PostAuthenticate);
+
+
 
             ConfigureWebApi(app);
         }
 
         private void ConfigureOAuth(IAppBuilder app)
         {
-            // The token endpoint path activates the ValidateClientAuthentication method from the AuthorisationServerProvider.
-            var oAuthServerOptions = new OAuthAuthorizationServerOptions()
+            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/api/token"),
-                AuthorizeEndpointPath = new PathString("/OAuth/Authorize"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(Configurations.AccessTokenExpirationMinutes),
-                Provider = new AuthorisationServerProvider(),
-                AuthorizationCodeProvider = new AuthenticationTokenProvider(),
-                RefreshTokenProvider = new RefreshTokenProvider(),
-                ApplicationCanDisplayErrors = true
+                TokenEndpointPath = new PathString("/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                Provider = new SimpleAuthorizationServerProvider()
             };
-            app.UseOAuthAuthorizationServer(oAuthServerOptions);
+
+            // Token Generation
+            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+
+            // The token endpoint path activates the ValidateClientAuthentication method from the AuthorisationServerProvider.
+            //var oAuthServerOptions = new OAuthAuthorizationServerOptions()
+            //{
+            //    AllowInsecureHttp = true,
+            //    TokenEndpointPath = new PathString("/api/token"),
+            //    AuthorizeEndpointPath = new PathString("/OAuth/Authorize"),
+            //    AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(Configurations.AccessTokenExpirationMinutes),
+            //    Provider = new AuthorisationServerProvider(),
+            //    AuthorizationCodeProvider = new AuthenticationTokenProvider(),
+            //    RefreshTokenProvider = new RefreshTokenProvider(),
+            //    ApplicationCanDisplayErrors = true
+            //};
+            //app.UseOAuthAuthorizationServer(oAuthServerOptions);
 
 
-            // Our own middleware that resets the current user set by the Forms authentication in case we have a Bearer token request
-            app.Use(typeof(BearerTokenMiddleware));
+            //// Our own middleware that resets the current user set by the Forms authentication in case we have a Bearer token request
+            //app.Use(typeof(BearerTokenMiddleware));
 
-            // This middleware should be called after the BearerTokenMiddleware
-            app.Use(typeof(OAuthBearerAuthenticationMiddleware), app, new OAuthBearerAuthenticationOptions());
+            //// This middleware should be called after the BearerTokenMiddleware
+            //app.Use(typeof(OAuthBearerAuthenticationMiddleware), app, new OAuthBearerAuthenticationOptions());
         }
 
         private void ConfigureWebApi(IAppBuilder app)
         {
             var config = new HttpConfiguration();
+
+            WebApiConfig.Register(config);
 
             config.Filters.Add(new ServerErrorHandlerAttribute());
 

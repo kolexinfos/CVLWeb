@@ -35,7 +35,8 @@ using Nop.Services.Stores;
 
 namespace Nop.Plugin.Api.Controllers
 {
-    [BearerTokenAuthorize]
+    //[BearerTokenAuthorize]
+    [Authorize]
     public class CustomersController : BaseApiController
     {
         private readonly ICustomerApiService _customerApiService;
@@ -105,6 +106,7 @@ namespace Nop.Plugin.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(CustomersRootObject))]
         [GetRequestsErrorInterceptorActionFilter]
+        [Route("api/customers/getcustomers")]
         public IHttpActionResult GetCustomers(CustomersParametersModel parameters)
         {
             if (parameters.Limit < Configurations.MinLimit || parameters.Limit > Configurations.MaxLimit)

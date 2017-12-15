@@ -397,6 +397,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JSON\Serializers\IJsonFieldsSerializer.cs" />
     <Compile Include="JSON\Serializers\JsonFieldsSerializer.cs" />
+    <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="RouteProvider.cs" />
     <Compile Include="Services\CategoryApiService.cs" />
     <Compile Include="Services\ClientService.cs" />
@@ -437,6 +438,7 @@
     <Compile Include="Validators\IFieldsValidator.cs" />
     <Compile Include="Validators\ShoppingCartItemDtoValidator.cs" />
     <Compile Include="Validators\TypeValidator.cs" />
+    <Compile Include="WebApiConfig.cs" />
     <Compile Include="WebHooks\ApiWebHookSender.cs" />
     <Compile Include="WebHooks\FilterProvider.cs" />
     <Compile Include="WebHooks\WebHookEventConsumer.cs" />

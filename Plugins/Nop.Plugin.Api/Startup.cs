@@ -20,11 +20,24 @@ using Swashbuckle.Application;
 using System.Net;
 using Nop.Plugin.Api.Helpers;
 using Nop.Plugin.Api.Providers;
+using Nop.Services.Customers;
+using Nop.Plugin.Api;
 
+[assembly: OwinStartup(typeof(Startup))]
 namespace Nop.Plugin.Api
 {
+    
     public class Startup
     {
+        //private readonly ICustomerService _customerService;
+        //private readonly ICustomerRegistrationService _customerRegistrationService;
+        //public Startup(ICustomerService customerService, ICustomerRegistrationService customerRegistrationService)
+        //{
+        //    _customerRegistrationService = customerRegistrationService;
+        //    _customerService = customerService;
+        //}
+
+        
         public void Configuration(IAppBuilder app)
         {
             // uncomment only if the client is an angular application that directly calls the oauth endpoint
@@ -41,12 +54,15 @@ namespace Nop.Plugin.Api
 
         private void ConfigureOAuth(IAppBuilder app)
         {
+            ICustomerService customerService = EngineContext.Current.Resolve<ICustomerService>();
+            ICustomerRegistrationService customerRegistrationService = EngineContext.Current.Resolve<ICustomerRegistrationService>();
+
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = new SimpleAuthorizationServerProvider()
+                Provider = new SimpleAuthorizationServerProvider(customerService,customerRegistrationService)
             };
 
             // Token Generation
@@ -81,15 +97,20 @@ namespace Nop.Plugin.Api
 
             WebApiConfig.Register(config);
 
-            config.Filters.Add(new ServerErrorHandlerAttribute());
+            //config.Filters.Add(new ServerErrorHandlerAttribute());
 
-            config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            };
+            //config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
+            //{
+            //    NullValueHandling = NullValueHandling.Ignore
+            //};
 
             config.Routes.MapHttpRoute(
                 name: "authorizeApi",
+                routeTemplate: "token",
+                defaults: new { controller = "OAuth", action = "Authorize" });
+
+            config.Routes.MapHttpRoute(
+                name: "token",
                 routeTemplate: "OAuth/Authorize",
                 defaults: new { controller = "OAuth", action = "Authorize" });
 
@@ -459,6 +480,12 @@ namespace Nop.Plugin.Api
                routeTemplate: "api/webhooks/filters",
                defaults: new { controller = "WebHookFilters", action = "GetWebHookFilters" },
                constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) });
+
+            config.Routes.MapHttpRoute(
+               name: "DefaultApi",
+               routeTemplate: "api/{controller}/{id}",
+               defaults: new { id = RouteParameter.Optional }
+           );
 
             // The default route templates for the Swagger docs and swagger-ui are "swagger/docs/{apiVersion}" and "swagger/ui/index#/{assetPath}" respectively.
             config

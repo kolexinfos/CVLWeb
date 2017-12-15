@@ -42,7 +42,8 @@ using Nop.Services.Stores;
 
 namespace Nop.Plugin.Api.Controllers
 {
-    [BearerTokenAuthorize]
+    //[BearerTokenAuthorize]
+    [Authorize]
     public class OrdersController : BaseApiController
     {
         private readonly IOrderApiService _orderApiService;
@@ -105,6 +106,13 @@ namespace Nop.Plugin.Api.Controllers
             _shippingService = shippingService;
             _dtoHelper = dtoHelper;
             _productService = productService;
+        }
+
+        [HttpGet]
+       
+        public IHttpActionResult GetOrdersTest(OrdersParametersModel parameters)
+        {
+            return new RawJsonActionResult("");
         }
 
         /// <summary>

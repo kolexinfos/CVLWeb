@@ -42,7 +42,7 @@ using Nop.Services.Stores;
 
 namespace Nop.Plugin.Api.Controllers
 {
-    //[BearerTokenAuthorize]
+   
     [Authorize]
     public class OrdersController : BaseApiController
     {
@@ -108,12 +108,7 @@ namespace Nop.Plugin.Api.Controllers
             _productService = productService;
         }
 
-        [HttpGet]
-       
-        public IHttpActionResult GetOrdersTest(OrdersParametersModel parameters)
-        {
-            return new RawJsonActionResult("");
-        }
+        
 
         /// <summary>
         /// Receive a list of all Orders
@@ -124,6 +119,7 @@ namespace Nop.Plugin.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(OrdersRootObject))]
         [GetRequestsErrorInterceptorActionFilter]
+        [Route("api/orders/getorders")]
         public IHttpActionResult GetOrders(OrdersParametersModel parameters)
         {
             if (parameters.Page < Configurations.DefaultPageValue)
@@ -164,6 +160,7 @@ namespace Nop.Plugin.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(OrdersCountRootObject))]
         [GetRequestsErrorInterceptorActionFilter]
+        [Route("api/orders/getorderscount")]
         public IHttpActionResult GetOrdersCount(OrdersCountParametersModel parameters)
         {
             var storeId = _storeContext.CurrentStore.Id;
@@ -190,6 +187,7 @@ namespace Nop.Plugin.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(OrdersRootObject))]
         [GetRequestsErrorInterceptorActionFilter]
+        [Route("api/orders/getorderbyid")]
         public IHttpActionResult GetOrderById(int id, string fields = "")
         {
             if (id <= 0)
@@ -223,6 +221,7 @@ namespace Nop.Plugin.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(OrdersRootObject))]
         [GetRequestsErrorInterceptorActionFilter]
+        [Route("api/orders/getordersbycustomerid")]
         public IHttpActionResult GetOrdersByCustomerId(int customer_id)
         {
             IList<OrderDto> ordersForCustomer = _orderApiService.GetOrdersByCustomerId(customer_id).Select(x => _dtoHelper.PrepareOrderDTO(x)).ToList();

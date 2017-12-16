@@ -53,12 +53,26 @@ namespace Nop.Plugin.Api.Providers
             {
                 case CustomerLoginResults.Successful:
                     {
-                        var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-                        identity.AddClaim(new Claim("sub", context.UserName));
-                        identity.AddClaim(new Claim("role", "user"));
+                        Customer customer = _customerService.GetCustomerByEmail(context.UserName);
+                        CustomerRole role = _customerService.GetCustomerRoleById(customer.Id);
 
-                        context.Validated(identity);
-                        return;
+
+                        //https://www.nopcommerce.com/boards/t/21617/how-to-check-if-the-user-has-a-role.aspx
+                        //if (customer.IsVendor())
+                        //{
+                            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                            identity.AddClaim(new Claim("sub", context.UserName));
+                            identity.AddClaim(new Claim("role", "user"));
+
+                            context.Validated(identity);
+                            return;
+                        //}
+                        //else
+                        //{
+                        //    context.SetError("invalid_grant", "Account.Login.WrongCredentials.NotVendor");
+                        //    return;
+                        //}
+                        
                     }
                 case CustomerLoginResults.CustomerNotExist:
                     context.SetError("invalid_grant", "Account.Login.WrongCredentials.CustomerNotExist");

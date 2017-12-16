@@ -23,6 +23,9 @@ namespace Nop.Plugin.Api
             //    defaults: new { id = RouteParameter.Optional }
             //);
 
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
+                    = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }

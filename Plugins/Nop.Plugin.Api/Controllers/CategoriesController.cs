@@ -33,7 +33,7 @@ using Nop.Plugin.Api.Helpers;
 
 namespace Nop.Plugin.Api.Controllers
 {
-    [BearerTokenAuthorize]
+    [Authorize]
     public class CategoriesController : BaseApiController
     {
         private readonly ICategoryApiService _categoryApiService;
@@ -75,6 +75,7 @@ namespace Nop.Plugin.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(CategoriesRootObject))]
         [GetRequestsErrorInterceptorActionFilter]
+        [Route("api/categories/getcategories")]
         public IHttpActionResult GetCategories(CategoriesParametersModel parameters)
         {
             if (parameters.Limit < Configurations.MinLimit || parameters.Limit > Configurations.MaxLimit)
@@ -309,6 +310,43 @@ namespace Nop.Plugin.Api.Controllers
             return new RawJsonActionResult("{}");
         }
 
+        /// <summary>
+        /// Receive a count of all Categories
+        /// </summary>
+        /// <response code="200">OK</response>
+        /// <response code="401">Unauthorized</response>
+        [HttpGet]
+        [ResponseType(typeof(CategoriesRootObject))]
+        [GetRequestsErrorInterceptorActionFilter]
+        [Route("api/categories/getproductcategoriesbyproductid")]
+        public IHttpActionResult GetProductCategoriesByProductId(int productid = 1, string fields = "")
+        {
+            List<ProductCategory> categories =  (List<ProductCategory>)_categoryService.GetProductCategoriesByProductId(productid);
+
+            IList<Category> cat = new List<Category>();
+
+            foreach(ProductCategory category in categories)
+            {
+                cat.Add(category.Category);                
+            }
+
+            IList<CategoryDto> categoriesAsDtos = cat.Select(category =>
+            {
+                return _dtoHelper.PrepareCategoryDTO(category);
+
+            }).ToList();
+
+            var categoriesRootObject = new CategoriesRootObject()
+            {
+                Categories = categoriesAsDtos
+            };
+
+            var json = _jsonFieldsSerializer.Serialize(categoriesRootObject, fields);
+
+
+            //var json = Newtonsoft.Json.JsonConvert.SerializeObject(categories);
+            return new RawJsonActionResult(json);
+        }
         private void UpdatePicture(Category categoryEntityToUpdate, ImageDto imageDto)
         {
             // no image specified then do nothing

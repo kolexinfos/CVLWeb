@@ -154,6 +154,13 @@
             <response code="404">Not Found</response>
             <response code="401">Unauthorized</response>
         </member>
+        <member name="M:Nop.Plugin.Api.Controllers.CategoriesController.GetProductCategoriesByProductId(System.Int32,System.String)">
+            <summary>
+            Receive a count of all Categories
+            </summary>
+            <response code="200">OK</response>
+            <response code="401">Unauthorized</response>
+        </member>
         <member name="M:Nop.Plugin.Api.Controllers.CustomersController.GetCustomers(Nop.Plugin.Api.Models.CustomersParameters.CustomersParametersModel)">
             <summary>
             Retrieve all customers of a shop

@@ -22,7 +22,7 @@ using Nop.Services.Stores;
 
 namespace Nop.Plugin.Api.Controllers
 {
-    [BearerTokenAuthorize]
+    [Authorize]
     public class CustomerRolesController : BaseApiController
     {
         public CustomerRolesController(
@@ -56,6 +56,7 @@ namespace Nop.Plugin.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(CustomerRolesRootObject))]
         [GetRequestsErrorInterceptorActionFilter]
+        [Route("api/customers/getallcustomerroles")]
         public IHttpActionResult GetAllCustomerRoles(string fields = "")
         {
             IList<CustomerRole> allCustomerRoles = _customerService.GetAllCustomerRoles();

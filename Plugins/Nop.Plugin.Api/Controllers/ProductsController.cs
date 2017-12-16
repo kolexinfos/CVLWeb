@@ -33,7 +33,7 @@ using Nop.Plugin.Api.Helpers;
 
 namespace Nop.Plugin.Api.Controllers
 {
-    [BearerTokenAuthorize]
+    [Authorize]
     public class ProductsController : BaseApiController
     {
         private readonly IStoreContext _storeContext;
@@ -86,6 +86,7 @@ namespace Nop.Plugin.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(ProductsRootObjectDto))]
         [GetRequestsErrorInterceptorActionFilter]
+        [Route("api/products/getproducts")]
         public IHttpActionResult GetProducts(ProductsParametersModel parameters)
         {
             if (parameters.Limit < Configurations.MinLimit || parameters.Limit > Configurations.MaxLimit)

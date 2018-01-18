@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin.Security.OAuth;
+﻿using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.OAuth;
 using Nop.Core.Domain.Customers;
 using Nop.Services.Customers;
 using System;
@@ -31,6 +32,16 @@ namespace Nop.Plugin.Api.Providers
             context.Validated();
         }
 
+        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
+            {
+                context.AdditionalResponseParameters.Add(property.Key, property.Value);
+            }
+
+            return Task.FromResult<object>(null);
+        }
+
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
 
@@ -57,24 +68,35 @@ namespace Nop.Plugin.Api.Providers
                         CustomerRole role = _customerService.GetCustomerRoleById(customer.Id);
 
 
+
                         //https://www.nopcommerce.com/boards/t/21617/how-to-check-if-the-user-has-a-role.aspx
-                        //if (customer.IsVendor())
-                        //{
+                        if (customer.IsVendor())
+                        {
                             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
                             identity.AddClaim(new Claim("sub", context.UserName));
                             identity.AddClaim(new Claim("role", "user"));
 
-                            context.Validated(identity);
+                        var props = new AuthenticationProperties(new Dictionary<string, string>
+                        {
+                            { "vendor_id" , customer.VendorId.ToString() }
+
+                        });
+
+                        var ticket = new AuthenticationTicket(identity, props);
+                        context.Validated(ticket);
+
+                        //context.Validated(identity);
+                        return;
+                        }
+                        else
+                        {
+                            context.SetError("invalid_grant", "Account.Login.WrongCredentials.NotVendor");
                             return;
-                        //}
-                        //else
-                        //{
-                        //    context.SetError("invalid_grant", "Account.Login.WrongCredentials.NotVendor");
-                        //    return;
-                        //}
-                        
+                        }
+
                     }
                 case CustomerLoginResults.CustomerNotExist:
+                    
                     context.SetError("invalid_grant", "Account.Login.WrongCredentials.CustomerNotExist");
                     return;
                 case CustomerLoginResults.Deleted:

@@ -61,7 +61,7 @@ namespace Nop.Plugin.Api
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1000),
                 Provider = new SimpleAuthorizationServerProvider(customerService,customerRegistrationService)
             };
 

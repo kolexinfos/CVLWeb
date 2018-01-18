@@ -143,6 +143,7 @@ namespace Nop.Plugin.Api.Controllers
         [HttpGet]
         [ResponseType(typeof(CategoriesRootObject))]
         [GetRequestsErrorInterceptorActionFilter]
+        [Route("api/categories/getcategorybyid")]
         public IHttpActionResult GetCategoryById(int id, string fields = "")
         {
             if (id <= 0)
@@ -319,7 +320,7 @@ namespace Nop.Plugin.Api.Controllers
         [ResponseType(typeof(CategoriesRootObject))]
         [GetRequestsErrorInterceptorActionFilter]
         [Route("api/categories/getproductcategoriesbyproductid")]
-        public IHttpActionResult GetProductCategoriesByProductId(int productid = 1, string fields = "")
+        public IHttpActionResult GetProductCategoriesByProductId(int productid, string fields = "")
         {
             List<ProductCategory> categories =  (List<ProductCategory>)_categoryService.GetProductCategoriesByProductId(productid);
 

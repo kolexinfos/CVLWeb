@@ -1,2 +1,2 @@
 DataProvider: sqlserver
-DataConnectionString: Data Source=computervillageliveng.database.windows.net;Initial Catalog=cvlapidb;Integrated Security=False;Persist Security Info=False;User ID=AntDevelopers;Password=AntHill@2017
+DataConnectionString: Data Source=computervillagelivehub.database.windows.net;Initial Catalog=computervillagelivehub;Integrated Security=False;Persist Security Info=False;User ID=developers;Password=AntHill@2017

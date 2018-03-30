@@ -20,6 +20,7 @@ using Nop.Services.Logging;
 using Nop.Services.Media;
 using Nop.Services.Security;
 using Nop.Services.Stores;
+using System.Net.Http;
 
 namespace Nop.Plugin.Api.Controllers
 {
@@ -56,6 +57,10 @@ namespace Nop.Plugin.Api.Controllers
             _pictureService = pictureService;
         }
 
+        public HttpResponseMessage Options()
+        {
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+        }
         protected IHttpActionResult Error(HttpStatusCode statusCode = (HttpStatusCode)422, string propertyKey = "", string errorMessage = "")
         {
             var errors = new Dictionary<string, List<string>>();

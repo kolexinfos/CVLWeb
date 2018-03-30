@@ -43,7 +43,7 @@ using Nop.Services.Stores;
 namespace Nop.Plugin.Api.Controllers
 {
    
-    [Authorize]
+    //[Authorize]
     public class OrdersController : BaseApiController
     {
         private readonly IOrderApiService _orderApiService;
@@ -236,6 +236,7 @@ namespace Nop.Plugin.Api.Controllers
 
         [HttpPost]
         [ResponseType(typeof(OrdersRootObject))]
+        //[Route("api/orders/createorder")]
         public IHttpActionResult CreateOrder([ModelBinder(typeof(JsonModelBinder<OrderDto>))] Delta<OrderDto> orderDelta)
         {
             // Here we display the errors if the validation has failed at some point.

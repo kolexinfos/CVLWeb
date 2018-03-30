@@ -178,6 +178,31 @@ namespace Nop.Plugin.Api.Controllers
             return new RawJsonActionResult(json);
         }
 
+        [HttpGet]
+        [ResponseType(typeof(ProductsRootObjectDto))]
+        [GetRequestsErrorInterceptorActionFilter]
+        [Route("api/products/getproductsbyvendorid")]
+        public IHttpActionResult GetProductsByVendorId(int vendorid, string fields = "")
+        {
+           IList<Product> allProducts = _productApiService.GetProducts()
+                                .Where(p => p.VendorId == vendorid).ToList();
+
+            IList<ProductDto> productsAsDtos = allProducts.Select(product =>
+            {
+                return _dtoHelper.PrepareProductDTO(product);
+
+            }).ToList();
+
+            var productsRootObject = new ProductsRootObjectDto()
+            {
+                Products = productsAsDtos
+            };
+
+            var json = _jsonFieldsSerializer.Serialize(productsRootObject, fields);
+
+            return new RawJsonActionResult(json);
+        }
+
         [HttpPost]
         [ResponseType(typeof(ProductsRootObjectDto))]
         public IHttpActionResult CreateProduct([ModelBinder(typeof(JsonModelBinder<ProductDto>))] Delta<ProductDto> productDelta)

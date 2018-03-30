@@ -7,10 +7,17 @@ using Nop.Plugin.Api.Helpers;
 using Nop.Services.Configuration;
 using Nop.Web.Framework.Menu;
 using Nop.Services.Localization;
+using Nop.Services.Events;
+using Nop.Core.Domain.Orders;
+using System;
+using System.Net;
+using System.Web.Script.Serialization;
+using System.Text;
+using System.IO;
 
 namespace Nop.Plugin.Api.Plugin
 {
-    public class ApiPlugin : BasePlugin, IAdminMenuPlugin
+    public class ApiPlugin : BasePlugin, IAdminMenuPlugin, IConsumer<OrderPlacedEvent>
     {
         private const string ControllersNamespace = "Nop.Plugin.Api.Controllers";
 
@@ -218,6 +225,54 @@ namespace Nop.Plugin.Api.Plugin
             
 
             rootNode.ChildNodes.Add(pluginMainMenu);
+        }
+
+        public void HandleEvent(OrderPlacedEvent eventMessage)
+        {
+
+            var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
+
+            request.KeepAlive = true;
+            request.Method = "POST";
+            request.ContentType = "application/json; charset=utf-8";
+
+            request.Headers.Add("authorization", "Basic NmEzODdiMmYtYmY1Ni00ODNlLTgzOWUtOTYwNTY2ZWUxZWZk");
+
+            var serializer = new JavaScriptSerializer();
+            var obj = new
+            {
+                app_id = "bffa3e81-97f5-4346-b410-d7671e97931a",
+                contents = new { en = "A new Order has been placed on one of your products. Click here to viewthe details" },
+                included_segments = new string[] { "All" }
+            };
+            var param = serializer.Serialize(obj);
+            byte[] byteArray = Encoding.UTF8.GetBytes(param);
+
+            string responseContent = null;
+
+            try
+            {
+                using (var writer = request.GetRequestStream())
+                {
+                    writer.Write(byteArray, 0, byteArray.Length);
+                }
+
+                using (var response = request.GetResponse() as HttpWebResponse)
+                {
+                    using (var reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        responseContent = reader.ReadToEnd();
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
+            }
+
+            System.Diagnostics.Debug.WriteLine(responseContent);
+            System.Diagnostics.Trace.TraceError(responseContent);
         }
     }
 }
